@@ -5,9 +5,9 @@
 #include "lua_base5.3/lauxlib.h"
 #include "al2o3_vfile/vfile.h"
 
-// TODO currenty readbuffer is shared among lua context, fix for multiple threads reads (TLS?)
-static void *readBuffer = NULL;
-static size_t readBufferSize =  (10 * 1024);
+static AL2O3_THREAD_LOCAL void *readBuffer = NULL;
+static AL2O3_THREAD_LOCAL size_t readBufferSize =  (10 * 1024);
+
 static char const *readerFunc(lua_State *L, void *ud, size_t *sz) {
 	VFile_Handle handle = (VFile_Handle) ud;
 	if (readBuffer == NULL) {

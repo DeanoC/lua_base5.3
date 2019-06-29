@@ -93,5 +93,3 @@ set(Deps
 		al2o3_vfile
 		)
 ADD_LIB(${LibName} "${Interface}" "${Src}" "${Deps}")
-
-
