@@ -14,4 +14,6 @@ AL2O3_EXTERN_C void LuaBase_Destroy(lua_State* L);
 AL2O3_EXTERN_C void LuaBase_SetLoadBufferSize(lua_State* L, size_t size);
 AL2O3_EXTERN_C bool LuaBase_ExecuteScript(lua_State *L, VFile_Handle handle);
 
+#define LUA_ASSERT(test, state, msg) if(!(test)) { luaL_error((state), (msg)); }
+
 #endif
