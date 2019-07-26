@@ -37,7 +37,7 @@ static void *allocFunc(void *ud, void *ptr, size_t osize, size_t nsize) {
 	if (ptr == NULL) {
 		// alloc
 		if (nsize != 0) {
-			return MEMORY_ALLOCATOR_CALLOC(1, nsize,allocator);
+			return MEMORY_ALLOCATOR_CALLOC(allocator, 1, nsize);
 		} else {
 			return NULL;
 		}
@@ -45,11 +45,11 @@ static void *allocFunc(void *ud, void *ptr, size_t osize, size_t nsize) {
 		// resize or free
 		if (nsize == 0) {
 			// free
-			MEMORY_ALLOCATOR_FREE(ptr, allocator);
+			MEMORY_ALLOCATOR_FREE(allocator, ptr);
 			return NULL;
 		} else {
 			// resize
-			return MEMORY_ALLOCATOR_REALLOC(ptr, nsize, allocator);
+			return MEMORY_ALLOCATOR_REALLOC(allocator, ptr, nsize);
 		}
 	}
 }
@@ -78,7 +78,7 @@ AL2O3_EXTERN_C void LuaBase_Destroy(lua_State* L) {
 	lua_Alloc func = lua_getallocf(L, &ud);
 	if(ud != NULL) {
 		Memory_Allocator const* allocator = (Memory_Allocator const *)ud;
-		MEMORY_ALLOCATOR_FREE(readBuffer, allocator);
+		MEMORY_ALLOCATOR_FREE(allocator, readBuffer);
 		readBuffer = NULL;
 	}
 	lua_close(L);
@@ -89,7 +89,7 @@ AL2O3_EXTERN_C void LuaBase_SetLoadBufferSize(lua_State* L, size_t size) {
 	lua_Alloc func = lua_getallocf(L, &ud);
 	if(ud != NULL) {
 		Memory_Allocator const* allocator = (Memory_Allocator const *)ud;
-		readBuffer = MEMORY_ALLOCATOR_MALLOC(size, allocator);
+		readBuffer = MEMORY_ALLOCATOR_MALLOC(allocator, size);
 		readBufferSize = size;
 	}
 }
