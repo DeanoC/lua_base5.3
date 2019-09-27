@@ -97,7 +97,7 @@ AL2O3_EXTERN_C void LuaBase_SetLoadBufferSize(lua_State* L, size_t size) {
 AL2O3_EXTERN_C bool LuaBase_ExecuteScript(lua_State *L, VFile_Handle handle) {
 	if (lua_load(L, &readerFunc, handle, VFile_GetName(handle), NULL) ||
 			lua_pcall(L, 0, 0, 0)) {
-		LOGERRORF("Lua script loading error %s", lua_tostring(L, -1));
+		LOGERROR("Lua script loading error %s", lua_tostring(L, -1));
 		return false;
 	};
 	return true;
